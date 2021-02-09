@@ -120,10 +120,16 @@ end
         
     psth = [];
     pref_d = [];
-
+    responsiveness = [];
+    low_rate = [];
+    excit_or_inhib = [];
 %--create object---------------------------------
     U_name = [site,'_',name];
     obj_save_loc = 'H:\UBO_monkey\analysis\sigle_unit_objects\qualified';
-    eval(sprintf('%s = SingleUnit(site,area,name,waveform,spike_data,raw_data,event,parameter,rasters,psth,pref_d);',U_name))
+    eval(sprintf('%s = SingleUnit(site,area,name,waveform,spike_data,raw_data,event,parameter,rasters,psth,pref_d,responsiveness,low_rate,excit_or_inhib);',U_name))
+    %-- calculate dpsth & update to the object
+    eval(sprintf('%s = SUpsth_1dspe(%s);',U_name,U_name))  
+    %-- replacing analysis step 2 - compute prefer_digit responsiveness low_rate excit_or_inhib
+    eval(sprintf('%s = SUresponsiveness(%s);',U_name,U_name))
     eval(sprintf('save(fullfile(obj_save_loc,U_name),''%s'')',U_name))
 % end

@@ -7,7 +7,10 @@ while i < n
     name = varargin{i};
     val = varargin{i+1};
     switch name
+        case 'code'
+            error('reset "subject code" is not allowed');
         case 'name'
+%             obj.name = val;
             error('reset "name" is not allowed');
         case 'age'
             obj.age = val;

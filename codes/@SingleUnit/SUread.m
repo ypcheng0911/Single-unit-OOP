@@ -20,7 +20,13 @@ switch property
         val = SU.raster;
     case 'psth'
         val = SU.psth;
-    case 'rating'
-        val = SU.rating;
+    case 'pref_d'
+        val = SU.prefer_digit;
+    case 'responsiveness'
+        val = SU.responsiveness;
+    case 'low_rate'
+        val = SU.low_rate;
+    case 'excit_or_inhib'
+        val = SU.excit_or_inhib;
 end
 end

@@ -5,6 +5,6 @@ switch property
     case 'site'
         val = obj.site;
     case 'units'
-        val = obj.unit; 
+        val = obj.unit;
 end
 end

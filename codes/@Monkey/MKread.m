@@ -1,5 +1,7 @@
 function val = MKread(obj,property)
 switch property
+    case 'code'
+        val = obj.code;
     case 'name'
         val = obj.name;
     case 'age'

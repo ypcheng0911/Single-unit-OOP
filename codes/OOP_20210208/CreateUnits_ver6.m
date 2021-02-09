@@ -4,13 +4,12 @@ clear
 close all
 clc
 
-%--parameters---------------------------------
+%-- parameters
 obj_save_loc = ['H:\UBO_monkey\analysis\sigle_unit_objects\',date];
 mkdir(obj_save_loc)
-sub = 'c2h';
-r_site = 'site3_depth4';
+sub = 'c2g';
+r_site = 'site4_depth1';
 abrv_site = [sub,'_',r_site([1,5,7,12])];
-% bin_size=0.005;  % second   1 or 5 ms
 pre_bin=500;
 post_bin=1500;
 dirs=[-135 -90 -45 0 45 90 135 180];
@@ -29,12 +28,11 @@ Trial_all = struct();
 psth = {};
 for f=1:size(files,1)
     filename=files(f,:);
-    %--plx_info
+    %-- plx_info
     ch_list{f}=ch_vec;
-    unit_list{f}=unit_vec;
-    
+    unit_list{f}=unit_vec;    
     u_name={'a','b','c','d'};
-    %--load parameters
+    %-- load parameters
     clearvars Trial
     load([filename(1:end-8),'_TrialInfo.mat'])
     sp_vec=Trial.speed;
@@ -48,33 +46,30 @@ for f=1:size(files,1)
         error('Matrix size error.')
     end
     [B,index] = sortrows(sp_dir);
-    %--event
+    %-- event
     channel=67;
     unit=1;
     [event_n, ~, event_ts, ~] = plx_waves(filename, channel, unit);     
     for u=1:length(ch_vec)
         channel=ch_vec(u);
         unit=unit_vec(u);
-        %--plx_waves
+        %-- plx_waves
         [~, ~, ts, wave] = plx_waves(filename, channel, unit);
-        
         waves{f,channel,unit} = wave;
         ts_all{f,channel,unit} = ts;
         ets_all{f,channel,unit} = event_ts;
-        %--raster/psth construction
+        %-- raster construction
         for i=1:event_n
             raster{f,channel,unit,i}=(ts(find(ts>=event_ts(i)-0.001*pre_bin & ts<event_ts(i)+0.001*post_bin))-event_ts(i))*1000; % (sec)            
         end    
     end 
 end
-
-% cellfun(@length,ch_list)
 ch_all = unique([vertcat(ch_list{:}),vertcat(unit_list{:})],'rows');
 
 for u=1:size(ch_all,1)
     channel=ch_all(u,1);
     unit=ch_all(u,2);
-%--save in object---------------------------------
+%-- prepare variables for SingleUnit object, call computation codes
     site = [sub,'_',r_site([1,5,7,12])]; % abbreviation
     [A,D] = all_sites_somatosensory_areas_yupo_update(site, channel);
     area = {D,A};
@@ -89,22 +84,30 @@ for u=1:size(ch_all,1)
     psth = [];
     
     pref_d = [];
+    responsiveness = [];
+    low_rate = [];
+    excit_or_inhib = [];
 
-%--create object---------------------------------
+%--  create object
     U_name = [site,'_',name];
-    eval(sprintf('%s = SingleUnit(site,area,name,waveform,spike_data,raw_data,event,parameter,rasters,psth,pref_d);',U_name))
-    eval(sprintf('%s = SUpsth_1dspe(%s);',U_name,U_name))  % calculate dpsth & update to the object
+    eval(sprintf('%s = SingleUnit(site,area,name,waveform,spike_data,raw_data,event,parameter,rasters,psth,pref_d,responsiveness,low_rate,excit_or_inhib);',U_name))
+    %-- calculate dpsth & update to the object
+    eval(sprintf('%s = SUpsth_1dspe(%s);',U_name,U_name))  
+    %-- replacing analysis step 2 - compute prefer_digit responsiveness low_rate excit_or_inhib
+    eval(sprintf('%s = SUresponsiveness(%s);',U_name,U_name))
+    %-- save results into .mat files
     eval(sprintf('save(fullfile(obj_save_loc,U_name),''%s'')',U_name))
+    %-- prepare for RecordingSite object construction
     U_names{u} = U_name;
 end
 
-% exceptions
+%-- create object for exceptional units
 if strcmp(sub,'c2h') && strcmp(r_site,'site3_depth1')
-    clear
+%     clear
     Neu = 1;
     CreateUnits_exceptions_ver2
 elseif strcmp(sub,'c2h') && strcmp(r_site,'site3_depth2')
-    clear
+%     clear
     Neu = 2;
     CreateUnits_exceptions_ver2
 end

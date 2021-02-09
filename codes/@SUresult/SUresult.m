@@ -5,4 +5,5 @@ obj.SUname = SUname;
 obj.type = type; % SU, RS, BA, MK
 obj.method = method; % anova, etc
 obj.results = results;
+obj = class(obj,'SUresult');
 end

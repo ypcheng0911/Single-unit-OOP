@@ -27,8 +27,14 @@ while i < n
             obj.raster = val;
         case 'psth'
             obj.psth = val;
-        case 'rating'
-            obj.rating = val;
+        case 'pref_d'
+            obj.prefer_digit = val;
+        case 'responsiveness'
+            obj.responsiveness = val;
+        case 'low_rate'
+            obj.low_rate = val;
+        case 'excit_or_inhib'
+            obj.excit_or_inhib = val;
         otherwise
             error(['Invalid property: ',name]);
     end

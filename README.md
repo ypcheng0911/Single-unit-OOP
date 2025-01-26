@@ -1,4 +1,5 @@
-## An object-oriented programming (OOP) project for single-unit data storage and processing in MATLAB.
+## Single-unit data storage and processing.
+An object-oriented programming (OOP) project in MATLAB.
 
 # Usage
 Run warmup.mat to initiate the OOP object.

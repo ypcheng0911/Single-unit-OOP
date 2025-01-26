@@ -1,4 +1,4 @@
-function val = MKread(obj,property)
+function val = SUBJread(obj,property)
 switch property
     case 'code'
         val = obj.code;

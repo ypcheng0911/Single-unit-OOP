@@ -1,4 +1,4 @@
-function obj = MKset(obj,varargin)
+function obj = SUBJset(obj,varargin)
 n = numel(varargin);
 assert(rem(n,2) == 0)  % show error warning if inputs are incomplete: e.g. ('site','3b') rather than ('3b')
 

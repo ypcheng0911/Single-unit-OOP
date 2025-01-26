@@ -2,4 +2,4 @@
 An object-oriented programming (OOP) project in MATLAB.
 
 # Usage
-Run warmup.mat to initiate the OOP object.
+Run warmup.m to initiate the OOP object.

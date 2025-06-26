@@ -1,9 +1,9 @@
 
-% Script warmup.m loads SingleUnit, RecordingSite, Monkey object format into
+% Script warmup.m loads SingleUnit, RecordingSite, Subject object format into
 % Matlab runtime(?).
 
 a = SingleUnit('warmup',[],[],[],[],[],[],[],[],[],[],[],[],[]);
 b = RecordingSite('warmup',[],{a});
-c = Monkey('warmup',[],[],[],[],{b});
+c = Subject('warmup',[],[],[],[],{b});
 clear
 clc

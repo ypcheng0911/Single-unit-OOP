@@ -4,6 +4,6 @@
 
 a = SingleUnit('warmup',[],[],[],[],[],[],[],[],[],[],[],[],[]);
 b = RecordingSite('warmup',[],{a});
-c = Subject('warmup',[],[],[],[],{b});
+c = SUBJ('warmup',[],[],[],[],{b});
 clear
 clc

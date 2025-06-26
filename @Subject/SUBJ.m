@@ -9,5 +9,5 @@ obj.gender = gender;
 for i = 1:size(RecordingSites,1)  % input using cell type 
     obj.RS(i) = RecordingSites{i};
 end
-obj = class(obj,'Monkey');
+obj = class(obj,'Subject');
 end

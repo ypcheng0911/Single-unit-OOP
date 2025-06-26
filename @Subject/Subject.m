@@ -1,4 +1,4 @@
-function obj = SUBJ(code,name,age,weight,gender,RecordingSites)
+function obj = Subject(code,name,age,weight,gender,RecordingSites)
 
 % Monkey class constructor
 obj.code = code;
